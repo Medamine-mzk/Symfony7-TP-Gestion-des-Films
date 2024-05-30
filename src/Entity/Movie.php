@@ -23,6 +23,10 @@ class Movie
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateOfCreation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'movies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Genre $genre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,5 +66,20 @@ class Movie
         $this->dateOfCreation = $dateOfCreation;
 
         return $this;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?Genre $genre): static
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+    public function __toString(){
+        return $this->getTitle();
     }
 }
